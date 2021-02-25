@@ -117,19 +117,6 @@ class Mdl_web extends CI_Model {
         }
     }
 
-    function updateStok($data){
-        $dataIn = array(
-            'stok' => $data['stok'],
-            'edited_at' => date('Y-m-d H:i:s')
-        );
-
-        if($data['id_produk']){
-            $this->db->where('id_produk',$data['id_produk']);
-            $this->db->update('produk',$dataIn);
-            return true;
-        }
-    }
-
     function deleteProduk($id_produk){
         if($id_produk){
             $this->db->where('id_produk', $id_produk);
@@ -144,11 +131,24 @@ class Mdl_web extends CI_Model {
             $dataIn = array(
                 'id_produk' => $data['id_produk'],
                 'id_user' => $data['id_user'],
-                'stok' => $data['stok'],
+                'stok' => $data['quantity'],
                 'created_at' => date('Y-m-d H:i:s')
             );
             $this->db->insert('checkout',$dataIn);
     
+            return true;
+        }
+    }
+
+    function updateStok($data){
+        $dataIn = array(
+            'stok' => $data['stok'],
+            'edited_at' => date('Y-m-d H:i:s')
+        );
+
+        if($data['id_produk']){
+            $this->db->where('id_produk',$data['id_produk']);
+            $this->db->update('produk',$dataIn);
             return true;
         }
     }

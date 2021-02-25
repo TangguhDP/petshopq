@@ -19,11 +19,14 @@
     <div class="row justify-content-center">
       <h1 class="text-center">Daftar produk yang dijual</h1>
       <div class="col col-8">
-        <div style="max-width: 550px;" class="input-group mb-3">
-          <input type="text" class="form-control" placeholder="Cari Produk" aria-label="Cari Produk"
-            aria-describedby="cari">
-          <button class="btn btn-primary" type="button" id="cari">Button</button>
-        </div>
+      <?php echo $this->session->flashdata('message') ?>
+        <form method="get" action="<?php echo site_url('Produk/index') ?>" class="col-9">
+            <div style="max-width: 550px;" class="input-group mb-3">
+                <input type="text" class="form-control" name="nama" placeholder="Cari Produk" aria-label="Cari Produk"
+                    aria-describedby="cari" value="<?php echo (isset($params['nama'])) ? $params['nama'] : '' ?>" >
+                <button class="btn btn-primary" type="submit" id="cari">Cari</button>
+            </div>
+        </form>
         <table class="table">
           <thead>
             <tr>
@@ -36,16 +39,29 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Meo Creamy</td>
-              <td>Cemilan Kucing</td>
-              <td>Rp 20.000</td>
-              <td>20</td>
-              <td>
-                <button type="button" class="btn btn-success">Beli</button>
-              </td>
-            </tr>
+          <?php if($produk){ ?>
+                <?php for ($i=0; $i <count($produk) ; $i++) { ?>
+                    <tr>
+                        <th scope="row"><?php echo ($i+1) ?></th>
+                        <td><?php echo $produk[$i]->nama ?></td>
+                        <td><?php echo $produk[$i]->deskripsi ?></td>
+                        <td>Rp. <?php echo number_format($produk[$i]->harga,2,',','.') ?></td>
+                        <td><?php echo $produk[$i]->stok ?></td>
+                        <?php if($this->session->userdata('id_user')){ ?>
+                          <td>
+                            <form action="<?php echo site_url('Produk/checkout') ?>" method="POST">
+                            <input type="hidden" name="quantity" value="1">
+                            <input type="hidden" name="id_produk" value="<?php echo $produk[$i]->id_produk ?>">
+                            <input type="hidden" name="id_user" value="<?php echo $this->session->userdata('id_user') ?>">
+                            <button type="submit" class="btn btn-success">Beli</button>
+                            </form>
+                          </td>
+                        <?php } ?>
+                    </tr>
+                <?php } ?>
+            <?php }else{ ?>
+                <tr><th colspan="6" style="text-align:center;"> Produk tidak ditemukan </th>
+            <?php } ?>
           </tbody>
         </table>
       </div>
