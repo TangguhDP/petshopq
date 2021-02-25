@@ -5,6 +5,7 @@ class Produk extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('v_produk');
+		$data['page'] = 'produk';
+		$this->load->view('v_produk',$data);
 	}
 }

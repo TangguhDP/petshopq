@@ -13,33 +13,19 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">PetshopQu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="<?php echo base_url(); ?>">Beranda</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>produk">Produk</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>auth/register">Register</a>
-                    <a class="nav-link active" aria-current="page" href="<?php echo base_url(); ?>auth">Login</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php $this->load->view('v_menu'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <h1 class="text-center">Login</h1>
-            <form class="col-6">
+            <form class="col-6" method="POST" action="<?php echo site_url('Auth/index') ?>">
+                <?php echo $this->session->flashdata('message'); ?>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="email" name="email" required placeholder="name@example.com">
                 </div>
                 <div class="mb-3">
                     <label for="passowrd" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="passowrd" placeholder="Password">
+                    <input type="password" class="form-control" id="passowrd" name="password" required placeholder="Password">
                 </div>
                 <button type="submit" class="btn btn-primary">Login</button>
             </form>

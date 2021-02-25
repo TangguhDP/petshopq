@@ -14,23 +14,7 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">PetshopQu</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link active" aria-current="page" href="<?php echo base_url();?>">Beranda</a>
-          <a class="nav-link" href="<?php echo base_url();?>produk">Produk</a>
-          <a class="nav-link" href="<?php echo base_url();?>auth/register">Register</a>
-          <a class="nav-link" href="<?php echo base_url();?>auth">Login</a>
-        </div>
-      </div>
-    </div>
-  </nav>
+  <?php $this->load->view('v_menu'); ?>
   <div class="container mt-5">
     <div class="row">
       <div class="col-sm">

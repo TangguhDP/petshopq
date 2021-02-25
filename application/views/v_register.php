@@ -13,41 +13,28 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">PetshopQu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="<?php echo base_url(); ?>">Beranda</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>produk">Produk</a>
-                    <a class="nav-link active" aria-current="page" href="<?php echo base_url(); ?>auth/register">Register</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>auth">Login</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php $this->load->view('v_menu'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <h1 class="text-center">Login</h1>
-            <form class="col-6">
+            <h1 class="text-center">Register</h1>
+            <form class="col-6" action="<?php echo site_url('Auth/register') ?>" method="POST">
+                <?php echo $this->session->flashdata('message'); ?>
+                <input type="hidden" name="role" value="2">
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" placeholder="Nama">
+                    <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama" required>
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+                    <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
                 </div>
                 <div class="mb-3">
                     <label for="passowrd" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="passowrd" placeholder="Password">
+                    <input type="password" class="form-control" name="password" id="passowrd" placeholder="Password" required>
                 </div>
                 <div class="mb-3">
                     <label for="alamat" class="form-label">Alamat</label>
-                    <textarea style="resize: none;" class="form-control" id="alamat" rows="3" placeholder="alamat"></textarea>
+                    <textarea style="resize: none;" class="form-control" name="alamat" id="alamat" rows="3" placeholder="alamat"></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
             </form>

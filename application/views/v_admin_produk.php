@@ -14,29 +14,24 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">PetshopQu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="<?php echo base_url(); ?>admin">Beranda</a>
-                    <a class="nav-link active" aria-current="page"
-                        href="<?php echo base_url(); ?>admin/produk">Produk</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>admin/user">User</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>auth/logout">Logout</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php $this->load->view('v_menu'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <h1 class="text-center">Daftar Produk</h1>
             <div class="col col-8">
-                <button type="button" class="btn btn-primary mb-2" onclick="location.href='<?php echo base_url();?>admin/form_produk'">Tambah Data</button>
+                <?php echo $this->session->flashdata('message') ?>
+                <div class="row">
+                    <form method="get" action="<?php echo site_url('Admin/produk') ?>" class="col-9">
+                        <div style="max-width: 550px;" class="input-group mb-3">
+                            <input type="text" class="form-control" name="nama" placeholder="Cari Produk" aria-label="Cari Produk"
+                                aria-describedby="cari" required value="<?php echo (isset($params['nama'])) ? $params['nama'] : '' ?>" >
+                            <button class="btn btn-primary" type="submit" id="cari">Cari</button>
+                        </div>
+                    </form>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-primary mb-2" onclick="location.href='<?php echo base_url();?>admin/form_produk'">Tambah Data</button>
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>
@@ -49,20 +44,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Meo Creamy</td>
-                            <td>Cemilan Kucing</td>
-                            <td>Rp 20.000</td>
-                            <td>20</td>
-                            <td>
-                                <button type="button" class="btn btn-warning">
-                                    <ion-icon class="text-light" name="create-outline"></ion-icon>
-                                </button> | <button type="button" class="btn btn-danger">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </button>
-                            </td>
-                        </tr>
+                        <?php if($produk){ ?>
+                            <?php for ($i=0; $i <count($produk) ; $i++) { ?>
+                                <tr>
+                                    <th scope="row"><?php echo ($i+1) ?></th>
+                                    <td><?php echo $produk[$i]->nama ?></td>
+                                    <td><?php echo $produk[$i]->deskripsi ?></td>
+                                    <td>Rp. <?php echo number_format($produk[$i]->harga,2,',','.') ?></td>
+                                    <td><?php echo $produk[$i]->stok ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="<?php echo site_url('Admin/edit_produk/'.$produk[$i]->id_produk) ?>">
+                                            <ion-icon class="text-light" name="create-outline"></ion-icon>
+                                        </a> | <a href="<?php echo site_url('Admin/delete_produk/'.$produk[$i]->id_produk) ?>" class="btn btn-danger">
+                                            <ion-icon name="trash-outline"></ion-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        <?php }else{ ?>
+                            <tr><th colspan="6" style="text-align:center;"> Produk tidak ditemukan </th>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

@@ -13,37 +13,28 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">PetshopQu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="<?php echo base_url(); ?>admin">Beranda</a>
-                    <a class="nav-link active" aria-current="page" href="<?php echo base_url(); ?>admin/produk">Produk</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>admin/user">User</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>auth/logout">Logout</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php $this->load->view('v_menu'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <h1 class="text-center">Form Produk</h1>
-            <form class="col-6">
+            <h1 class="text-center">Form <?php echo (isset($produk)) ? 'Edit' : '' ; ?> Produk</h1>
+            <form action="<?php echo (isset($produk)) ? site_url('Admin/edit_produk/'.$produk[0]->id_produk) : site_url('Admin/form_produk'); ?>" method="POST" class="col-6">
+                <?php echo $this->session->flashdata('message') ?>
+                <?php echo (isset($produk)) ? '<input type="hidden" name="id_produk" value="'.$produk[0]->id_produk.'">' : '' ;?>
                 <div class="mb-3">
                     <label for="nama" class="form-label">Nama</label>
-                    <input type="text" class="form-control" id="nama" placeholder="Nama">
+                    <input type="text" class="form-control" id="nama" placeholder="Nama" name="nama" required value="<?php echo (isset($produk)) ? $produk[0]->nama : '' ;?>">
                 </div>
                 <div class="mb-3">
                     <label for="stok" class="form-label">Stok</label>
-                    <input type="number" class="form-control" id="stok" placeholder="Stok">
+                    <input type="number" class="form-control" min="0" id="stok" placeholder="Stok" name="stok" required value="<?php echo (isset($produk)) ? $produk[0]->stok : '' ;?>">
+                </div>
+                <div class="mb-3">
+                    <label for="stok" class="form-label">Harga</label>
+                    <input type="number" min="0" class="form-control" id="harga" placeholder="harga" name="harga" required value="<?php echo (isset($produk)) ? $produk[0]->harga : '' ;?>">
                 </div>
                 <div class="mb-3">
                     <label for="deskripsi" class="form-label">Deskripsi</label>
-                    <textarea style="resize: none;" class="form-control" id="deskripsi" rows="3" placeholder="Deskripsi"></textarea>
+                    <textarea style="resize: none;" class="form-control" id="deskripsi" rows="3" name="deskripsi" placeholder="Deskripsi"><?php echo (isset($produk)) ? $produk[0]->deskripsi : '' ;?></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

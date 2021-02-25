@@ -14,53 +14,45 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">PetshopQu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="<?php echo base_url(); ?>admin">Beranda</a>
-                    <a class="nav-link active" aria-current="page"
-                        href="<?php echo base_url(); ?>admin/produk">Produk</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>admin/user">User</a>
-                    <a class="nav-link" href="<?php echo base_url(); ?>auth/logout">Logout</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <?php $this->load->view('v_menu'); ?>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <h1 class="text-center">Daftar User</h1>
             <div class="col col-8">
-                <button type="button" class="btn btn-primary mb-2" onclick="location.href='<?php echo base_url();?>admin/form_produk'">Tambah Data</button>
+                <?php echo $this->session->flashdata('message') ?>
+                <button type="button" class="btn btn-primary mb-2" onclick="location.href='<?php echo base_url();?>Admin/form_user'">Tambah Data</button>
                 <table class="table">
                     <thead>
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">Nama</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Alamat</th>
                             <th scope="col">Role</th>
                             <th scope="col">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Tangguh</td>
-                            <td>tangguh@myname.com</td>
-                            <td>Admin</td>
-                            <td>
-                                <button type="button" class="btn btn-warning">
-                                    <ion-icon class="text-light" name="create-outline"></ion-icon>
-                                </button> | <button type="button" class="btn btn-danger">
-                                    <ion-icon name="trash-outline"></ion-icon>
-                                </button>
-                            </td>
-                        </tr>
+                    <?php if($users){ ?>
+                            <?php for ($i=0; $i <count($users) ; $i++) { ?>
+                                <tr>
+                                    <th scope="row"><?php echo ($i+1) ?></th>
+                                    <td><?php echo $users[$i]->nama ?></td>
+                                    <td><?php echo $users[$i]->email ?></td>
+                                    <td><?php echo $users[$i]->alamat ?></td>
+                                    <td><?php echo ($users[0]->role == '1') ? 'Admin' : 'Customer'; ?></td>
+                                    <td>
+                                        <a class="btn btn-warning" href="<?php echo site_url('Admin/edit_user/'.$users[$i]->id_user) ?>">
+                                            <ion-icon class="text-light" name="create-outline"></ion-icon>
+                                        </a> | <a href="<?php echo site_url('Admin/delete_user/'.$users[$i]->id_user) ?>" class="btn btn-danger">
+                                            <ion-icon name="trash-outline"></ion-icon>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        <?php }else{ ?>
+                            <tr><th colspan="6" style="text-align:center;"> Produk tidak ditemukan </th>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
